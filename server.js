@@ -121,7 +121,7 @@ io.on('connection', (socket) => {
 
 
 
-    socket.emit('new_player', newPlayer);
+    socket.emit('new_player', newPlayer, players);
 
     socket.on('movement', () => {
         //When the client emits movement, this will run

@@ -58,6 +58,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
 
+
         let playerID = document.querySelector('.playerid')
 
         //Function which draws the positions of all players and tracks the players object from server.js
@@ -69,7 +70,7 @@
                 playerColors = ["red", "orange", "yellow", "lightgreen", "lightblue", "violet", "mistyrose", "darkgoldenrod", "mediumorchid	"]
                 var character = document.createElement('div')
                 character.className = `character` //player-${i + 1} 
-                character.innerHTML = `P${players[i].name}`
+                character.innerHTML = `${players[i].name}`
                 character.style.position = 'relative'
                 character.style.width = "50px"
                 character.style.backgroundColor = playerColors[i]
@@ -107,12 +108,17 @@
         //NEW PLAYER JOINS
         var socket = io();
 
-        socket.on('new_player', (player) => {
+        socket.on('new_player', (player, players) => {
             // console.log("new player joined")
             // console.log(socket.id)
             // socket.emit('new_player')
             // console.log(player)
             playerID.innerHTML = `You are Player ${player.name}` // why won't you work
+            updatePlayer(players)
+            setInterval(() => {
+                updatePlayer(players)
+            }, 10000);
+
         });
 
 
@@ -267,6 +273,7 @@
 
 
 
+
         //Display timer client side
         //Server side the timer ticks down and emits each second
 
@@ -292,7 +299,6 @@
         var gunshotSound = new Audio("./public/gunshot.mp3")
         gunshotSound.volume = 0.1;
         // gunshotSound.play();
-
 
 /// END OF AUDIO /////
     </script>
