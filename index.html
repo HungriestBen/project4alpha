@@ -6,23 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
+
 </head>
 
 
 <link rel="stylesheet" href="./style.css">
 
 <body>
-    <h2>Ben's Game</h2>
+    <h2><img src="./public/70a50a24a06bf3d14008d04baa0882c7.png" alt=""></h2>
     <div class="countdown">When all players are ready, click start</div>
     <div class="gamewrapper">
-        <div class="gameboard"></div>
+        <div class="gameboard">
+        </div>
         <div class="safezone">
+            <div class="finishline"></div>
             <div class="doll">
                 <div class="lefteye"></div>
                 <div class="righteye"></div>
             </div>
         </div>
     </div>
+    <div class="gap"></div>
     <div class="buttons">
         <button class="refreshButton">Refresh players</button>
         <button class="resetButton">Reset</button>
@@ -55,7 +66,7 @@
             document.querySelector(".gameboard").innerHTML = ""
 
             for (let i = 0; i < players.length; i++) {
-                playerColors = ["red", "orange", "yellow", "green", "blue", "violet", "mistyrose", "darkgoldenrod"]
+                playerColors = ["red", "orange", "yellow", "lightgreen", "lightblue", "violet", "mistyrose", "darkgoldenrod", "mediumorchid	"]
                 var character = document.createElement('div')
                 character.className = `character` //player-${i + 1} 
                 character.innerHTML = `P${players[i].name}`
@@ -63,6 +74,7 @@
                 character.style.width = "50px"
                 character.style.backgroundColor = playerColors[i]
                 character.style.height = "50px"
+                character.style.lineHeight = "50px"
                 character.style.border = "1px solid black"
                 character.style.borderRadius = "50%"
                 character.style.left = players[i].position + "px"
@@ -199,7 +211,7 @@
 
             if (timeLeft < 1) {
                 players.forEach(element => {
-                    if (element.position < 750) {
+                    if (element.position < 650) {
                         element.alive = false
                         gunshotSound.play();
                         let domAllPlayers = document.querySelectorAll('.character')
@@ -208,7 +220,6 @@
                                 element.style.backgroundColor = "black"
                             }
                         });
-
 
                     }
                 });

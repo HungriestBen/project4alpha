@@ -34,6 +34,11 @@ app.get('/public/mechanicalnoise.mp3', (req, res) => {
 app.get('/public/gunshot.mp3', (req, res) => {
     res.sendFile(__dirname + '/public/gunshot.mp3');
 });
+app.get('/public/70a50a24a06bf3d14008d04baa0882c7.png', (req, res) => {
+    res.sendFile(__dirname + '/public/70a50a24a06bf3d14008d04baa0882c7.png');
+});
+
+
 //I tried the using middleware but couldn't get it to work
 // app.use(express.static('public'))
 
@@ -58,13 +63,13 @@ function disarmDoll() {
     dollStatus = "off"
 };
 
-const dollArming = [115, 100, 80, 60, 40, 28, 15];
+const dollArming = [115, 100, 80, 60, 42, 28, 15];
 
 function tick() {
     if (secondTick > maxSeconds) {
         // clearInterval(myInterval);
         players.forEach(player => {
-            if (timeLeft < 1 && player.position < 750)
+            if (timeLeft < 1 && player.position < 650)
                 player.alive = false
         });
         return;
@@ -77,7 +82,7 @@ function tick() {
 
         secondTick++;
         players.forEach(player => {
-            if (timeLeft < 1 && player.position < 750)
+            if (timeLeft < 1 && player.position < 650)
                 player.alive = false
         });
         io.emit('updateTimer', secondTick, timeLeft, dollStatus, players)
@@ -126,7 +131,7 @@ io.on('connection', (socket) => {
             newPlayer.position = newPlayer.position + 0
 
             //If player is alive, but moves, his status changes to dead
-        } else if (newPlayer.position < 750) {
+        } else if (newPlayer.position < 650) {
             if (timeLeft < 1) {
                 newPlayer.alive = false
             }
@@ -137,7 +142,7 @@ io.on('connection', (socket) => {
                 console.log("This player just died" + newPlayer)
                 //Otherwise, move forward
             } else {
-                newPlayer.position = newPlayer.position + 1
+                newPlayer.position = newPlayer.position + 20
             }
         }
         // Server needs to know if the doll is red or not
