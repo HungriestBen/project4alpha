@@ -18,10 +18,8 @@
         <div class="gameboard"></div>
         <div class="safezone">
             <div class="doll">
-
                 <div class="lefteye"></div>
                 <div class="righteye"></div>
-
             </div>
         </div>
     </div>
@@ -49,28 +47,18 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
 
+        let playerID = document.querySelector('.playerid')
 
-        //Reset buytton
-        //Start Button
-        // Add names to the players 
-        // Add colours
-
+        //Function which draws the positions of all players and tracks the players object from server.js
         function updatePlayer(players) {
-            let playerID = document.querySelector('.playerid')
-
-            // Loop through the players array
-            // For each player draw their respective position
-            // Position use, style.left = position pixel count
-            let allPlayers = document.querySelectorAll('.character')
 
             document.querySelector(".gameboard").innerHTML = ""
 
             for (let i = 0; i < players.length; i++) {
                 playerColors = ["red", "orange", "yellow", "green", "blue", "violet", "mistyrose", "darkgoldenrod"]
                 var character = document.createElement('div')
-                character.className = `player-${i + 1} character`
+                character.className = `character` //player-${i + 1} 
                 character.innerHTML = `P${players[i].name}`
-                playerID.innerHTML = `You are Player ${players[i].name}` // why won't you work
                 character.style.position = 'relative'
                 character.style.width = "50px"
                 character.style.backgroundColor = playerColors[i]
@@ -79,8 +67,10 @@
                 character.style.borderRadius = "50%"
                 character.style.left = players[i].position + "px"
                 character.style.textAlign = "center"
+                character.style.zIndex = 10
 
-                //${String(socket.id).replace(/\D/g, '')}
+
+
                 document.querySelector('.gameboard').appendChild(character)
                 console.log(players[i].position)
 
@@ -97,15 +87,6 @@
 
             }
 
-            // allPlayers[0].style.backgroundColor = "red"
-            // allPlayers[1].style.backgroundColor = "orange"
-            // allPlayers[2].style.backgroundColor = "yellow"
-            // allPlayers[3].style.backgroundColor = "green"
-            // allPlayers[4].style.backgroundColor = "blue"
-            // allPlayers[5].style.backgroundColor = "indigo"
-            // allPlayers[6].style.backgroundColor = "violet"
-            // allPlayers[7].style.backgroundColor = "purple"
-
             //This displays each player in the players array and their respective positions.
             //However, if called again, it creates a new set below
         }
@@ -114,10 +95,12 @@
         //NEW PLAYER JOINS
         var socket = io();
 
-        socket.on('new_player', () => {
-            console.log("new player joined")
-            socket.emit('new_player')
-
+        socket.on('new_player', (player) => {
+            // console.log("new player joined")
+            // console.log(socket.id)
+            // socket.emit('new_player')
+            // console.log(player)
+            playerID.innerHTML = `You are Player ${player.name}` // why won't you work
         });
 
 
@@ -214,6 +197,22 @@
         previousDollStatus = ""
         socket.on('updateTimer', (secondTick, timeLeft, dollStatus, players) => {
 
+            if (timeLeft < 1) {
+                players.forEach(element => {
+                    if (element.position < 750) {
+                        element.alive = false
+                        gunshotSound.play();
+                        let domAllPlayers = document.querySelectorAll('.character')
+                        domAllPlayers.forEach(element => {
+                            if (element.offsetLeft < 650) {
+                                element.style.backgroundColor = "black"
+                            }
+                        });
+
+
+                    }
+                });
+            }
 
             //Reduce timer value
             console.log("1 second passed")
@@ -282,7 +281,6 @@
         var gunshotSound = new Audio("./public/gunshot.mp3")
         gunshotSound.volume = 0.1;
         // gunshotSound.play();
-
 
 
 /// END OF AUDIO /////

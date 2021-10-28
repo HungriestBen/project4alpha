@@ -116,7 +116,7 @@ io.on('connection', (socket) => {
 
 
 
-    io.emit('new_player');
+    socket.emit('new_player', newPlayer);
 
     socket.on('movement', () => {
         //When the client emits movement, this will run
@@ -127,6 +127,9 @@ io.on('connection', (socket) => {
 
             //If player is alive, but moves, his status changes to dead
         } else if (newPlayer.position < 750) {
+            if (timeLeft < 1) {
+                newPlayer.alive = false
+            }
             if (dollStatus == "on") {
                 newPlayer.shot = true
                 newPlayer.alive = false

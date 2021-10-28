@@ -4,14 +4,15 @@ h2 {
 .gamewrapper {
     display: grid;
     grid-template-columns: 650px 150px;
+    width: 800px;
     margin: 0 auto;
-    width: 50%
-}
+} 
+
 .gameboard {
     width: 650px;
     height: 450px;
     border: 1px solid black;
-    background-color: bisque
+    /* background-color: bisque */
 }
 
 .safezone {
