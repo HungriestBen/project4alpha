@@ -5,7 +5,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const { setTimeout } = require('timers');
 const io = new Server(server);
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 // io.emit('some event', { someProperty: 'some value', otherProperty: 'other value' }); // This will emit the event to all connected sockets
 
