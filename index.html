@@ -82,22 +82,16 @@
                 character.style.textAlign = "center"
                 character.style.zIndex = 10
 
-
-
                 document.querySelector('.gameboard').appendChild(character)
                 console.log(players[i].position)
-
-
 
                 //Condition if the player array results in someone dead
                 if (players[i].alive == false) {
                     character.style.backgroundColor = "black"
                 }
-
                 if (players[i].alive == false && players[i].timeOfDeath > Date.now() - 1500) {
                     gunshotSound.play()
                 }
-
             }
 
             //This displays each player in the players array and their respective positions.
@@ -114,11 +108,13 @@
             // socket.emit('new_player')
             // console.log(player)
             playerID.innerHTML = `You are Player ${player.name}` // why won't you work
-            updatePlayer(players)
+            // updatePlayer(players)
             // Why doesn't this mark the players in the correct positions?
             // setInterval(() => {
             //     updatePlayer(players)
             // }, 10000);
+
+            setInterval(updatePlayer(players), 1000)
 
         });
 
@@ -181,11 +177,13 @@
 
         resetButton.addEventListener('click', (e) => {
             //Emit to server so character position is updated
+            document.querySelector('.countdown').innerText = "When all players are ready, press start!"
             socket.emit('clickReset')
         });
 
         socket.on('clickReset', (players) => {
             updatePlayer(players)
+            document.querySelector('.countdown').innerText = "When all players are ready, press start!"
         });
         //
 

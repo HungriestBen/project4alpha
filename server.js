@@ -165,8 +165,10 @@ io.on('connection', (socket) => {
     //LISTEN FOR PLAYER REFRESH BUTTON
     socket.on('clickRefresh', () => {
         console.log("You are clicking refresh")
-        io.emit('clickRefresh', players)
+        io.emit('clickRefresh', players, timeLeft)
     })
+
+    
     //LISTEN FOR RESET BUTTON
     socket.on('clickReset', () => {
         console.log("You are clicking reset")
