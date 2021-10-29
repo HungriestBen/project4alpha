@@ -142,7 +142,7 @@ io.on('connection', (socket) => {
                 console.log("This player just died" + newPlayer)
                 //Otherwise, move forward
             } else {
-                newPlayer.position = newPlayer.position + 20
+                newPlayer.position = newPlayer.position + 1
             }
         }
         // Server needs to know if the doll is red or not
