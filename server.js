@@ -141,6 +141,8 @@ io.on('connection', (socket) => {
                 newPlayer.timeOfDeath = Date.now()
                 console.log("This player just died" + newPlayer)
                 //Otherwise, move forward
+            } else if (timeLeft == 120 & newPlayer.position == 0) {
+                newPlayer.position = newPlayer.position + 0
             } else {
                 newPlayer.position = newPlayer.position + 1
             }
@@ -168,10 +170,11 @@ io.on('connection', (socket) => {
         io.emit('clickRefresh', players, timeLeft)
     })
 
-    
+
     //LISTEN FOR RESET BUTTON
     socket.on('clickReset', () => {
         console.log("You are clicking reset")
+        timeLeft = 120
         secondTick = 0
         players.forEach(element => {
             element.position = 0
@@ -181,7 +184,7 @@ io.on('connection', (socket) => {
         secondTick = 0
         disarmDoll()
         resetButton()
-        io.emit('clickReset', players)
+        io.emit('clickReset', players, timeLeft)
     })
     //LISTEN FOR START TIMER BUTTON
     socket.on('clickStart', () => {

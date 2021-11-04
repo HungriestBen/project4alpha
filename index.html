@@ -166,7 +166,7 @@
 
         });
 
-        socket.on('clickRefresh', (players) => {
+        socket.on('clickRefresh', (players, timeLeft) => {
             updatePlayer(players)
         });
 
@@ -177,6 +177,7 @@
 
         resetButton.addEventListener('click', (e) => {
             //Emit to server so character position is updated
+
             document.querySelector('.countdown').innerText = "When all players are ready, press start!"
             socket.emit('clickReset')
         });
